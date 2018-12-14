@@ -143,4 +143,44 @@ res.json(err);
 });
 
 });
+
+
+
+
+router.put('/:director_id', (req, res, next) => {
+ const promise = Director.findByIdAndUpdate(req.params.director_id, req.body, {new:true});
+ promise.then((data) => {
+
+res.json(data);
+
+
+}).catch((err) => {
+  if (err)
+     next({message: "böyle bir director yok kardeş"});
+
+res.json(err);
+
+});
+
+
+});
+
+
+router.delete('/:director_id', (req, res, next) => {
+ const promise = Director.findByIdAndRemove(req.params.director_id);
+ promise.then((data) => {
+
+res.json(data);
+
+
+}).catch((err) => {
+  if (err)
+     next({message: "film yok silemedik."});
+
+res.json(err);
+
+});
+
+
+});
 module.exports = router;
