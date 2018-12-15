@@ -11,9 +11,14 @@ const directorRouter = require('./routes/director');
 const app = express();
 
 //DB CONNECTION
-
 const db = require('./helper/db.js')();
 
+//MIDDLEWARE
+const verifyToken = require('./middleware/verify-token');
+
+//CONFIG
+const config =  require('./config.js');
+app.set('api_secret_key', config.api_secret_key);
 
 
 // view engine setup
@@ -27,6 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/api', verifyToken);
 app.use('/api/movie', movieRouter);
 app.use('/api/director', directorRouter);
 
